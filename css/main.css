@@ -14,5 +14,11 @@ body{
 #player{
     background-color: greenyellow;
     position: absolute;
+}
+
+.obstacle{
+    background-color: fuchsia;
+    position: absolute;
+
 
 }
