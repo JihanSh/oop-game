@@ -1,9 +1,9 @@
 class Player {
   constructor() {
-    this.positionX = 10;
-    this.positionY = 0;
     this.width = 20;
     this.height = 10;
+    this.positionX = 50 - this.width / 2;
+    this.positionY = 0;
     this.playerElm = document.getElementById("player");
     this.updateUI();
   }
@@ -15,12 +15,16 @@ class Player {
     this.playerElm.style.bottom = this.positionY + "vh";
   }
   moveLeft() {
-    this.positionX--;
-    this.updateUI();
+    if (this.positionX > 0) {
+      this.positionX--;
+      this.updateUI();
+    }
   }
   moveRight() {
-    this.positionX++;
-    this.updateUI();
+    if (this.positionX < 100 - this.width) {
+      this.positionX++;
+      this.updateUI();
+    }
   }
 }
 
@@ -63,10 +67,20 @@ setInterval(() => {
 
 // move obstacle
 setInterval(() => {
-  obstacleArr.forEach((obstacleInstance, i, arr) => {
+  obstacleArr.forEach((obstacleInstance) => {
     obstacleInstance.moveDown();
+
+    //detect collision
+    if (
+      player.positionX < obstacleInstance.positionX + obstacleInstance.width &&
+      player.positionX + player.width > obstacleInstance.positionX &&
+      player.positionY < obstacleInstance.positionY + obstacleInstance.height &&
+      player.positionY + player.height > obstacleInstance.positionY
+    ) {
+      console.log("Game Over");
+    }
   });
-}, 50);
+}, 70);
 
 document.addEventListener("keydown", (event) => {
   if (event.code === "ArrowLeft") {
